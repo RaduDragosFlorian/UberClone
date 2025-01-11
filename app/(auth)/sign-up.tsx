@@ -7,6 +7,7 @@ import OAuth from "@/components/OAuth";
 import InputField from "@/components/InputField";
 import { useSignUp } from "@clerk/clerk-expo";
 import { ReactNativeModal } from "react-native-modal";
+import { fetchAPI } from "@/lib/fetch";
 function SignUp() {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [showSuccesModal, setShowSuccesModal] = useState(false);
@@ -58,7 +59,14 @@ function SignUp() {
       });
 
       if (completeSignUp.status === "complete") {
-        // todo: create database user
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({ ...verification, state: "succes" });
       } else {
