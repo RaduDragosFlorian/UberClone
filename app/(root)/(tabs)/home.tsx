@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import GoogleTextInput from "@/components/GoogleTextInput";
 import Map from "@/components/Map";
 import { useLocationStore } from "@/store";
+import { router } from "expo-router";
 const recentRides = [
   {
     ride_id: "1",
@@ -128,7 +129,15 @@ export default function Page() {
   const loading = true;
   const [hasPermissions, setHasPermissions] = useState(false);
   const handleSignOut = () => {};
-  const handleDestinationPress = () => {};
+  const handleDestinationPress = (location: {
+    latitude: number;
+    longitude: number;
+    adress: string;
+  }) => {
+    setDestinationLocation(location);
+
+    router.push("/(root)/find-ride");
+  };
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
