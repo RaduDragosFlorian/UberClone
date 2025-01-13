@@ -128,7 +128,7 @@ const Map = () => {
                   latitude: destinationLatitude,
                   longitude: destinationLongitude,
                 }}
-                apikey={directionsAPI!}
+                apikey={process.env.EXPO_PUBLIC_GOOGLE_API_KEY!}
                 strokeColor="#0286FF"
                 strokeWidth={2}
               />
