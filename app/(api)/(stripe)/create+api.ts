@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
   const ephemeralKey = await stripe.ephemeralKeys.create(
     { customer: customer.id },
-    { apiVersion: "2024-12-18" },
+    { apiVersion: "2025-04-30.basil" },
   );
 
   const paymentIntent = await stripe.paymentIntents.create({

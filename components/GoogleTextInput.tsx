@@ -80,5 +80,4 @@ const GoogleTextInput = ({
     </View>
   );
 };
-
 export default GoogleTextInput;
