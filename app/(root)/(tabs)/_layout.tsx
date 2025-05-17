@@ -75,11 +75,13 @@ export default function Layout() {
         options={{
           title: "Chat",
           headerShown: false,
+          tabBarHideOnKeyboard: true, // 👈 ensures keyboard doesn't hide your input
           tabBarIcon: ({ focused }) => (
             <TabIcon source={icons.chat} focused={focused} />
           ),
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
