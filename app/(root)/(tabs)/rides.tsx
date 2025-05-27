@@ -2,7 +2,7 @@ import { useUser } from "@clerk/clerk-expo";
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import RideCard from "@/components/RideCard";
+import RideCard from "@/components/TripSummaryCard";
 import { images } from "@/constants";
 import { useFetch } from "@/lib/fetch";
 import { Ride } from "@/types/type";

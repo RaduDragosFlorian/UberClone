@@ -2,9 +2,9 @@ import { Image, Text, ScrollView, View } from "react-native";
 import { icons, images } from "@/constants";
 import { useCallback, useState } from "react";
 import { Link, useRouter } from "expo-router";
-import CustomButton from "@/components/CustomButton";
+import AccentButton from "@/components/AccentButton";
 import OAuth from "@/components/OAuth";
-import InputField from "@/components/InputField";
+import InputField from "@/components/FormInputField";
 import { useSignIn } from "@clerk/clerk-expo";
 
 function SignIn() {
@@ -67,7 +67,7 @@ function SignIn() {
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
-          <CustomButton
+          <AccentButton
             title="Sign In"
             onPress={onSignInPress}
             className="mt-6"

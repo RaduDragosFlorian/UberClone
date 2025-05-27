@@ -2,9 +2,9 @@ import { Image, Text, ScrollView, View, Alert } from "react-native";
 import { icons, images } from "@/constants";
 import { useState } from "react";
 import { Link, router } from "expo-router";
-import CustomButton from "@/components/CustomButton";
+import AccentButton from "@/components/AccentButton";
 import OAuth from "@/components/OAuth";
-import InputField from "@/components/InputField";
+import FormInputField from "@/components/FormInputField";
 import { useSignUp } from "@clerk/clerk-expo";
 import { ReactNativeModal } from "react-native-modal";
 import { fetchAPI } from "@/lib/fetch";
@@ -96,21 +96,21 @@ function SignUp() {
           </Text>
         </View>
         <View className="p-5">
-          <InputField
+          <FormInputField
             label="Name"
             placeholder="Enter your name"
             icon={icons.person}
             value={form.name}
             onChangeText={(value) => setForm({ ...form, name: value })}
           />
-          <InputField
+          <FormInputField
             label="Email"
             placeholder="Enter your email"
             icon={icons.email}
             value={form.email}
             onChangeText={(value) => setForm({ ...form, email: value })}
           />
-          <InputField
+          <FormInputField
             label="Password"
             placeholder="Enter your password"
             icon={icons.lock}
@@ -118,7 +118,7 @@ function SignUp() {
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
-          <CustomButton
+          <AccentButton
             title="Sign Up"
             onPress={onSignUpPress}
             className="mt-6"
@@ -147,7 +147,7 @@ function SignUp() {
             <Text className="font-Jakarta mb-5">
               We've sent a verification code to {form.email}
             </Text>
-            <InputField
+            <FormInputField
               label="Code"
               icon={icons.lock}
               placeholder="12345"
@@ -156,17 +156,17 @@ function SignUp() {
               onChangeText={(code) =>
                 setVerification({ ...verification, code })
               }
-            ></InputField>
+            ></FormInputField>
             {verification.error && (
               <Text className="text-red-500 text-sm mt-1">
                 {verification.error}
               </Text>
             )}
-            <CustomButton
+            <AccentButton
               title="Verify Email"
               onPress={onPressVerify}
               className="mt-5 bg-success-500"
-            ></CustomButton>
+            ></AccentButton>
           </View>
         </ReactNativeModal>
 
@@ -182,14 +182,14 @@ function SignUp() {
             <Text className="text-base text-gray-400 font-Jakarta text-center">
               You have succesfully verified your account
             </Text>
-            <CustomButton
+            <AccentButton
               title="Browse Home"
               onPress={() => {
                 setShowSuccesModal(false);
                 router.push("/(root)/(tabs)/home");
               }}
               className="mt-5"
-            ></CustomButton>
+            ></AccentButton>
           </View>
         </ReactNativeModal>
       </View>

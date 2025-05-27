@@ -3,7 +3,7 @@ import * as AuthSession from "expo-auth-session";
 import { Alert, Image, Text, View } from "react-native";
 import { router } from "expo-router";
 
-import CustomButton from "@/components/CustomButton";
+import AccentButton from "@/components/AccentButton";
 import { icons } from "@/constants";
 import { googleOAuth } from "@/lib/auth";
 
@@ -29,7 +29,7 @@ const OAuth = () => {
         <View className="flex-1 h-[1px] bg-general-100" />
       </View>
 
-      <CustomButton
+      <AccentButton
         title="Log In with Google"
         className="mt-5 w-full shadow-none"
         IconLeft={() => (

@@ -2,8 +2,8 @@ import { useUser } from "@clerk/clerk-expo";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { Image, Text, View } from "react-native";
 
-import Payment from "@/components/Payment";
-import RideLayout from "@/components/RideLayout";
+import RidePayment from "@/components/RidePayment";
+import JourneyLayout from "@/components/JourneyLayout";
 import { icons } from "@/constants";
 import { formatTime } from "@/lib/utils";
 import { useDriverStore, useLocationStore } from "@/store";
@@ -23,7 +23,7 @@ const BookRide = () => {
       merchantIdentifier="merchant.com.uber"
       urlScheme="myapp"
     >
-      <RideLayout title="Book Ride">
+      <JourneyLayout headerText="Book Ride">
         <>
           <Text className="text-xl font-JakartaSemiBold mb-3">
             Ride Information
@@ -92,7 +92,7 @@ const BookRide = () => {
             </View>
           </View>
 
-          <Payment
+          <RidePayment
             fullName={user?.fullName!}
             email={user?.emailAddresses[0].emailAddress!}
             amount={driverDetails?.price!}
@@ -100,7 +100,7 @@ const BookRide = () => {
             rideTime={driverDetails?.time!}
           />
         </>
-      </RideLayout>
+      </JourneyLayout>
     </StripeProvider>
   );
 };

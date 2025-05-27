@@ -15,35 +15,36 @@ import { Driver, MarkerData } from "@/types/type";
 
 const directionsAPI = process.env.EXPO_PUBLIC_DIRECTIONS_API_KEY;
 
-const Map = () => {
+const RideMap = () => {
   const {
-    userLongitude,
     userLatitude,
+    userLongitude,
     destinationLatitude,
     destinationLongitude,
   } = useLocationStore();
-  const { selectedDriver, setDrivers } = useDriverStore();
 
+  const { selectedDriver, setDrivers } = useDriverStore();
   const { data: drivers, loading, error } = useFetch<Driver[]>("/(api)/driver");
+
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
+  // Generate driver markers once data is loaded
   useEffect(() => {
-    if (Array.isArray(drivers)) {
-      if (!userLatitude || !userLongitude) return;
+    if (!userLatitude || !userLongitude || !Array.isArray(drivers)) return;
 
-      const newMarkers = generateMarkersFromData({
-        data: drivers,
-        userLatitude,
-        userLongitude,
-      });
+    const generated = generateMarkersFromData({
+      data: drivers,
+      userLatitude,
+      userLongitude,
+    });
 
-      setMarkers(newMarkers);
-    }
+    setMarkers(generated);
   }, [drivers, userLatitude, userLongitude]);
 
+  // Update driver times if route is selected
   useEffect(() => {
     if (
-      markers.length > 0 &&
+      markers.length &&
       destinationLatitude !== undefined &&
       destinationLongitude !== undefined
     ) {
@@ -53,8 +54,8 @@ const Map = () => {
         userLongitude,
         destinationLatitude,
         destinationLongitude,
-      }).then((drivers) => {
-        setDrivers(drivers as MarkerData[]);
+      }).then((updatedDrivers) => {
+        setDrivers(updatedDrivers as MarkerData[]);
       });
     }
   }, [markers, destinationLatitude, destinationLongitude]);
@@ -66,19 +67,21 @@ const Map = () => {
     destinationLongitude,
   });
 
-  if (loading || (!userLatitude && !userLongitude))
+  if (loading || (!userLatitude && !userLongitude)) {
     return (
-      <View className="flex justify-between items-center w-full">
-        <ActivityIndicator size="small" color="#000" />
+      <View className="w-full flex items-center justify-center py-4">
+        <ActivityIndicator size="small" color="#0286FF" />
       </View>
     );
+  }
 
-  if (error)
+  if (error) {
     return (
-      <View className="flex justify-between items-center w-full">
-        <Text>Error: {error}</Text>
+      <View className="w-full flex items-center justify-center py-4">
+        <Text className="text-red-500">Error: {error}</Text>
       </View>
     );
+  }
 
   return (
     <View style={styles.container}>
@@ -86,10 +89,9 @@ const Map = () => {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
-          tintColor="black"
+          showsUserLocation
           showsPointsOfInterest={false}
           initialRegion={region}
-          showsUserLocation={true}
           userInterfaceStyle="light"
         >
           {markers.map((marker) => (
@@ -105,7 +107,7 @@ const Map = () => {
                   ? icons.selectedMarker
                   : icons.marker
               }
-            ></Marker>
+            />
           ))}
 
           {destinationLatitude && destinationLongitude && (
@@ -117,20 +119,17 @@ const Map = () => {
                   longitude: destinationLongitude,
                 }}
                 title="Destination"
-                image={icons.pin}
+                image={icons.pinEmerald}
               />
               <MapViewDirections
-                origin={{
-                  latitude: userLatitude!,
-                  longitude: userLongitude!,
-                }}
+                origin={{ latitude: userLatitude!, longitude: userLongitude! }}
                 destination={{
                   latitude: destinationLatitude,
                   longitude: destinationLongitude,
                 }}
                 apikey={process.env.EXPO_PUBLIC_GOOGLE_API_KEY!}
-                strokeColor="#0286FF"
-                strokeWidth={2}
+                strokeColor="#10B981" // Emerald shade
+                strokeWidth={3}
               />
             </>
           )}
@@ -148,12 +147,12 @@ const styles = StyleSheet.create({
   },
   mapWrapper: {
     flex: 1,
-    borderRadius: 24, // Apply borderRadius to the wrapper
-    overflow: "hidden", // Ensures that the MapView corners are clipped
+    borderRadius: 24,
+    overflow: "hidden",
   },
   map: {
-    ...StyleSheet.absoluteFillObject, // Fill the wrapper completely
+    ...StyleSheet.absoluteFillObject,
   },
 });
 
-export default Map;
+export default RideMap;

@@ -3,8 +3,8 @@ import { Image, ScrollView, Text, View, TextInput, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 
-import InputField from "@/components/InputField";
-import CustomButton from "@/components/CustomButton";
+import InputField from "@/components/FormInputField";
+import AccentButton from "@/components/AccentButton";
 
 const Profile = () => {
   const { user } = useUser();
@@ -69,9 +69,9 @@ const Profile = () => {
         />
         <View className="flex-row justify-end mt-2">
           {isEditingPhone ? (
-            <CustomButton title="Save" onPress={handleSavePhone} />
+            <AccentButton title="Save" onPress={handleSavePhone} />
           ) : (
-            <CustomButton
+            <AccentButton
               title="Edit"
               onPress={() => setIsEditingPhone(true)}
             />

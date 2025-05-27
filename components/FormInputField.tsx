@@ -11,7 +11,7 @@ import {
 
 import { InputFieldProps } from "@/types/type";
 
-const InputField = ({
+const FormInputField = ({
   label,
   icon,
   secureTextEntry = false,
@@ -27,19 +27,25 @@ const InputField = ({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="my-2 w-full">
-          <Text className={`text-lg font-JakartaSemiBold mb-3 ${labelStyle}`}>
+        <View className={`w-full my-3 ${className}`}>
+          {/* Input Label */}
+          <Text className={`text-base font-JakartaSemiBold mb-2 ${labelStyle}`}>
             {label}
           </Text>
+
+          {/* Input Field Container */}
           <View
-            className={`flex flex-row justify-start items-center relative bg-neutral-100 rounded-full border border-neutral-100 focus:border-primary-500  ${containerStyle}`}
+            className={`flex-row items-center bg-neutral-100 rounded-full border border-neutral-200 px-4 ${containerStyle}`}
           >
+            {/* Icon (optional) */}
             {icon && (
-              <Image source={icon} className={`w-6 h-6 ml-4 ${iconStyle}`} />
+              <Image source={icon} className={`w-5 h-5 mr-3 ${iconStyle}`} />
             )}
+
+            {/* Text Input */}
             <TextInput
-              className={`rounded-full p-4 font-JakartaSemiBold text-[15px] flex-1 ${inputStyle} text-left`}
               secureTextEntry={secureTextEntry}
+              className={`flex-1 py-3 text-[15px] font-JakartaRegular ${inputStyle}`}
               {...props}
             />
           </View>
@@ -49,4 +55,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default FormInputField;

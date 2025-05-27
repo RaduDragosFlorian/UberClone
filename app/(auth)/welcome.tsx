@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
 import { onboarding } from "@/constants";
-import CustomButton from "@/components/CustomButton";
+import AccentButton from "@/components/AccentButton";
 
 const Onboarding = () => {
   const swiperRef = useRef<Swiper>(null);
@@ -49,7 +49,7 @@ const Onboarding = () => {
           </View>
         ))}
       </Swiper>
-      <CustomButton
+      <AccentButton
         title={isLastSlide ? "Get Started" : "Next"}
         onPress={() =>
           isLastSlide
