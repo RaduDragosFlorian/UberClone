@@ -36,7 +36,7 @@ export default function Page() {
   }) => {
     setDestinationLocation(location);
 
-    router.push("/(root)/find-ride");
+    router.push("/(root)/ride-find");
   };
   useEffect(() => {
     (async () => {

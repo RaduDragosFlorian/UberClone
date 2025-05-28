@@ -7,47 +7,61 @@ import JourneyLayout from "@/components/JourneyLayout";
 import { icons } from "@/constants";
 import { useLocationStore } from "@/store";
 
-const FindRide = () => {
+const RidePlaningScreen = () => {
   const {
     userAddress,
     destinationAddress,
-    setDestinationLocation,
     setUserLocation,
+    setDestinationLocation,
   } = useLocationStore();
 
-  return (
-    <JourneyLayout headerText="Ride" sheetHeights={[]}>
-      <View className="my-3">
-        <Text className="text-lg font-JakartaSemiBold mb-3">From</Text>
+  const handlePickupSelect = (location: any) => {
+    setUserLocation(location);
+  };
 
+  const handleDropoffSelect = (location: any) => {
+    setDestinationLocation(location);
+  };
+
+  const navigateToConfirmation = () => {
+    router.push("/(root)/ride-confirmation");
+  };
+
+  return (
+    <JourneyLayout headerText="Plan Your Ride" sheetHeights={[]}>
+      <View className="my-3">
+        <Text className="text-lg font-JakartaSemiBold mb-3">
+          Pickup Location
+        </Text>
         <PlacesSearchInput
           icon={icons.target}
           initialLocation={userAddress!}
           containerStyle="bg-neutral-100"
           textInputBackgroundColor="#f5f5f5"
-          handlePress={(location) => setUserLocation(location)}
+          handlePress={handlePickupSelect}
         />
       </View>
 
       <View className="my-3">
-        <Text className="text-lg font-JakartaSemiBold mb-3">To</Text>
-
+        <Text className="text-lg font-JakartaSemiBold mb-3">
+          Dropoff Location
+        </Text>
         <PlacesSearchInput
           icon={icons.map}
           initialLocation={destinationAddress!}
           containerStyle="bg-neutral-100"
           textInputBackgroundColor="transparent"
-          handlePress={(location) => setDestinationLocation(location)}
+          handlePress={handleDropoffSelect}
         />
       </View>
 
       <AccentButton
-        title="Find Now"
-        onPress={() => router.push(`/(root)/confirm-ride`)}
+        title="Search Rides"
+        onPress={navigateToConfirmation}
         className="mt-5 mb-10"
       />
     </JourneyLayout>
   );
 };
 
-export default FindRide;
+export default RidePlaningScreen;

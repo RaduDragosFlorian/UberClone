@@ -4,9 +4,9 @@ const Layout = () => {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="find-ride" options={{ headerShown: false }} />
-      <Stack.Screen name="confirm-ride" options={{ headerShown: false }} />
-      <Stack.Screen name="book-ride" options={{ headerShown: false }} />
+      <Stack.Screen name="ride-find" options={{ headerShown: false }} />
+      <Stack.Screen name="ride-confirmation" options={{ headerShown: false }} />
+      <Stack.Screen name="ride-booking" options={{ headerShown: false }} />
     </Stack>
   );
 };
