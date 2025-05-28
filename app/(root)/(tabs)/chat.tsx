@@ -111,14 +111,14 @@ const ChatScreen = () => {
   }, [foundUser, currentUserEmail]);
 
   return (
-    <SafeAreaView className="flex-1 bg-general-500 px-4 pt-2">
+    <SafeAreaView className="flex-1 bg-emerald-50 px-4 pt-2">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={{ flex: 1 }}
         keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
       >
-        {/* ✅ Styled Email Search Bar */}
-        <View className="mx-2 mb-4 bg-white rounded-full shadow-md px-4 py-2 flex-row items-center">
+        {/* 🟢 Email Search Bar */}
+        <View className="mx-2 mb-4 bg-white rounded-full shadow-md shadow-emerald-200 px-4 py-2 flex-row items-center">
           <Image
             source={icons.search}
             className="w-5 h-5 mr-3"
@@ -130,21 +130,21 @@ const ChatScreen = () => {
             placeholder="Search user by email"
             placeholderTextColor="gray"
             editable={!searching}
-            className="flex-1 text-base font-medium"
+            className="flex-1 text-base font-medium text-black"
           />
           <TouchableOpacity
             onPress={searchUser}
             disabled={searching}
-            className="ml-3 bg-black p-2 rounded-full"
+            className="ml-3 bg-emerald-600 p-2 rounded-full"
           >
             <Ionicons name="search" color="white" size={18} />
           </TouchableOpacity>
         </View>
 
-        {/* ✅ Messages */}
+        {/* 🟢 Chat Display */}
         {foundUser && (
           <>
-            <Text className="text-xl font-JakartaBold mb-2">
+            <Text className="text-xl font-JakartaBold text-emerald-600 mb-2">
               Chat with {foundUser.name}
             </Text>
 
@@ -160,8 +160,8 @@ const ChatScreen = () => {
                   <View
                     className={`mb-2 px-4 py-2 rounded-xl max-w-[75%] ${
                       isCurrentUser
-                        ? "bg-black self-end rounded-br-none"
-                        : "bg-white self-start rounded-bl-none"
+                        ? "bg-emerald-600 self-end rounded-br-none"
+                        : "bg-white self-start rounded-bl-none border border-emerald-200"
                     }`}
                   >
                     <Text
@@ -183,7 +183,7 @@ const ChatScreen = () => {
           </>
         )}
 
-        {/* ✅ Absolute Positioned Chat Input */}
+        {/* 🟢 Input Bar */}
         {foundUser && (
           <View
             style={{
@@ -192,7 +192,7 @@ const ChatScreen = () => {
               left: 16,
               right: 16,
             }}
-            className="flex-row items-center justify-between bg-white shadow-md rounded-full px-4 py-2"
+            className="flex-row items-center justify-between bg-white shadow-md shadow-emerald-200 rounded-full px-4 py-2"
           >
             <View className="flex-row items-center flex-1">
               <Image
@@ -205,13 +205,13 @@ const ChatScreen = () => {
                 onChangeText={setNewMessage}
                 placeholder="Type a message"
                 placeholderTextColor="gray"
-                className="flex-1 text-base font-medium"
+                className="flex-1 text-base font-medium text-black"
               />
             </View>
             <TouchableOpacity
               onPress={sendMessage}
               disabled={sending || !newMessage.trim()}
-              className="ml-3 bg-black p-2 rounded-full"
+              className="ml-3 bg-emerald-600 p-2 rounded-full"
             >
               <Ionicons name="send" size={20} color="white" />
             </TouchableOpacity>
