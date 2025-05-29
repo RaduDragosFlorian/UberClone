@@ -1,4 +1,4 @@
-import { Image, Text, ScrollView, View, Alert } from "react-native";
+import { Image, Text, View, Alert, ScrollView } from "react-native";
 import { icons, images } from "@/constants";
 import { useState } from "react";
 import { Link, router } from "expo-router";
@@ -8,6 +8,8 @@ import FormInputField from "@/components/FormInputField";
 import { useSignUp } from "@clerk/clerk-expo";
 import { ReactNativeModal } from "react-native-modal";
 import { fetchAPI } from "@/lib/fetch";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 function SignUp() {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [showSuccesModal, setShowSuccesModal] = useState(false);
@@ -15,7 +17,6 @@ function SignUp() {
     name: "",
     email: "",
     password: "",
-    // Morcovel2002!
   });
 
   const [verification, setVerification] = useState({
@@ -27,21 +28,16 @@ function SignUp() {
   const onSignUpPress = async () => {
     if (!isLoaded) return;
 
-    // Start sign-up process using email and password provided
     try {
       await signUp.create({
         emailAddress: form.email,
         password: form.password,
       });
 
-      // Send user an email with verification code
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
 
-      // Set 'pendingVerification' to true to display second form
-      // and capture OTP code
       setVerification({
         ...verification,
-
         state: "pending",
       });
     } catch (err: any) {
@@ -49,7 +45,6 @@ function SignUp() {
     }
   };
 
-  // Handle submission of verification form
   const onPressVerify = async () => {
     if (!isLoaded) return;
 
@@ -67,10 +62,10 @@ function SignUp() {
             clerkId: completeSignUp.createdUserId,
           }),
         });
+
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({ ...verification, state: "succes" });
       } else {
-        // If the status is not complete, check why.
         setVerification({
           ...verification,
           error: "Verification failed",
@@ -87,14 +82,15 @@ function SignUp() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <View className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-emerald-50">
+      <ScrollView className="flex-1">
         <View className="relative w-full h-[250px]">
           <Image source={images.signUpCar} className="z-0 w-full h-[250px]" />
-          <Text className="text-2xl text-black font-JakartaSemiBold absolute bottom-5 left-5">
+          <Text className="text-2xl text-emerald-600 font-JakartaSemiBold absolute bottom-5 left-5">
             Create Your Account
           </Text>
         </View>
+
         <View className="p-5">
           <FormInputField
             label="Name"
@@ -118,6 +114,7 @@ function SignUp() {
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
+
           <AccentButton
             title="Sign Up"
             onPress={onSignUpPress}
@@ -128,12 +125,15 @@ function SignUp() {
 
           <Link
             href="/sign-in"
-            className="text-lg text-center text-general-200 mt-10"
+            className="text-lg text-center text-emerald-600 mt-10"
           >
-            <Text>Already have an account?</Text>
-            <Text className="text-primary-500">Log In</Text>
+            <Text>Already have an account? </Text>
+            <Text className="font-JakartaBold underline text-emerald-800">
+              Log In
+            </Text>
           </Link>
         </View>
+
         <ReactNativeModal
           isVisible={verification.state === "pending"}
           onModalHide={() => {
@@ -141,10 +141,10 @@ function SignUp() {
           }}
         >
           <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
-            <Text className="text-2xl font-JakartaExtraBold mb-2">
+            <Text className="text-2xl font-JakartaExtraBold mb-2 text-emerald-600">
               Verification
             </Text>
-            <Text className="font-Jakarta mb-5">
+            <Text className="font-Jakarta text-black mb-5">
               We've sent a verification code to {form.email}
             </Text>
             <FormInputField
@@ -156,7 +156,7 @@ function SignUp() {
               onChangeText={(code) =>
                 setVerification({ ...verification, code })
               }
-            ></FormInputField>
+            />
             {verification.error && (
               <Text className="text-red-500 text-sm mt-1">
                 {verification.error}
@@ -166,7 +166,7 @@ function SignUp() {
               title="Verify Email"
               onPress={onPressVerify}
               className="mt-5 bg-success-500"
-            ></AccentButton>
+            />
           </View>
         </ReactNativeModal>
 
@@ -175,12 +175,12 @@ function SignUp() {
             <Image
               source={images.check}
               className="w-[110px] h-[110px] mx-auto my-5"
-            ></Image>
-            <Text className="text-3xl font-JakartaBold text-center">
+            />
+            <Text className="text-3xl font-JakartaBold text-center text-emerald-600">
               Verified
             </Text>
             <Text className="text-base text-gray-400 font-Jakarta text-center">
-              You have succesfully verified your account
+              You have successfully verified your account
             </Text>
             <AccentButton
               title="Browse Home"
@@ -189,11 +189,11 @@ function SignUp() {
                 router.push("/(root)/(tabs)/home");
               }}
               className="mt-5"
-            ></AccentButton>
+            />
           </View>
         </ReactNativeModal>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 export default SignUp;

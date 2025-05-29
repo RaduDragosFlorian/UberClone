@@ -10,55 +10,58 @@ const Onboarding = () => {
   const swiperRef = useRef<Swiper>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const isLastSlide = activeIndex === onboarding.length - 1;
+
   return (
-    <SafeAreaView className="flex h-full items-center justify-between bg-white">
-      <TouchableOpacity
-        onPress={() => {
-          router.replace("/(auth)/sign-up");
-        }}
-        className="w-full flex justify-end items-end p-5"
-      >
-        <Text className="test-black text-md font-JakartaBold">Skip</Text>
-      </TouchableOpacity>
+    <SafeAreaView className="flex-1 bg-emerald-50">
+      <View className="flex justify-end items-end p-5">
+        <TouchableOpacity onPress={() => router.replace("/(auth)/sign-up")}>
+          <Text className="text-emerald-600 text-md font-JakartaBold">
+            Skip
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <Swiper
         ref={swiperRef}
         loop={false}
-        dot={
-          <View className="w-[32px] h-[4px] mx-1 bg-[#E2E8F0] rounded-full" />
-        }
+        onIndexChanged={setActiveIndex}
+        dot={<View className="w-2 h-2 rounded-full bg-emerald-200 mx-1" />}
         activeDot={
-          <View className="w-[32px] h-[4px] mx-1 bg-[#0286FF] rounded-full" />
+          <View className="w-4 h-2 rounded-full bg-emerald-600 mx-1" />
         }
-        onIndexChanged={(index) => setActiveIndex(index)}
+        className="h-[60%]"
       >
         {onboarding.map((item) => (
-          <View key={item.id} className="flex items-center justify-center p-5">
+          <View key={item.id} className="items-center justify-center px-6">
             <Image
               source={item.image}
-              className="w-full h-[300px]"
               resizeMode="contain"
+              className="w-[100%] h-[60%]"
             />
-            <View className="flex flex-row items-center justify-center w-full mt-10">
-              <Text className="text-black text-3xl font-bold mx-10 text-center">
-                {item.title}
-              </Text>
-            </View>
-            <Text className="text-lg font-JakartaSemiBold text-center text-[#858585] mx-10 mt-3">
+            <Text className="text-2xl font-JakartaBold text-center mt-6 text-emerald-600">
+              {item.title}
+            </Text>
+            <Text className="text-base text-center mt-4 text-emerald-500">
               {item.description}
             </Text>
           </View>
         ))}
       </Swiper>
-      <AccentButton
-        title={isLastSlide ? "Get Started" : "Next"}
-        onPress={() =>
-          isLastSlide
-            ? router.replace("/(auth)/sign-up")
-            : swiperRef.current?.scrollBy(1)
-        }
-        className="w-11/12 mt-10 mb-2"
-      />
+
+      <View className="px-6 pb-8">
+        <AccentButton
+          title={isLastSlide ? "Get Started" : "Next"}
+          onPress={() => {
+            if (isLastSlide) {
+              router.replace("/(auth)/sign-up");
+            } else {
+              swiperRef.current?.scrollBy(1);
+            }
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };
+
 export default Onboarding;
