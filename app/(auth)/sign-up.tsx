@@ -30,10 +30,10 @@ function SignUp() {
 
     try {
       await signUp.create({
+        firstName: form.name,
         emailAddress: form.email,
         password: form.password,
       });
-
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
 
       setVerification({

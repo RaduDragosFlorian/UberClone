@@ -28,7 +28,7 @@ const RidePlaningScreen = () => {
   };
 
   return (
-    <JourneyLayout headerText="Plan Your Ride" sheetHeights={[]}>
+    <JourneyLayout headerText="Plan Your Journey" sheetHeights={[]}>
       <View className="my-3">
         <Text className="text-lg font-JakartaSemiBold mb-3">
           Pickup Location
